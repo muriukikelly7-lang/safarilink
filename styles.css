@@ -696,7 +696,7 @@ a {
   border: 1px solid #d8d5cb;
   border-top: 7px solid #ae9008;
   background: #fff;
-  box-shadow: 0 8px 24px rgba(14, 25, 22, 0.16);
+  box-shadow: none;
 }
 
 .customer-details:not([hidden])::before {
