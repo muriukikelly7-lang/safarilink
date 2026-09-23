@@ -45,13 +45,44 @@ const tripRadios = document.querySelectorAll('input[name="trip"]');
 const returnDateInput = document.querySelectorAll('.field input[type="date"]')[1];
 const form = document.querySelector('.booking-form');
 const submitButton = document.querySelector('.primary-btn.wide');
+const formStatus = document.querySelector('.form-status');
+const swapButton = document.querySelector('.swap-btn');
+const newsletterInput = document.querySelector('.newsletter-box input');
+const subscribeButton = document.querySelector('.subscribe-btn');
+const fromInput = document.querySelector('.from-field input');
+const toInput = document.querySelector('.route-grid .field:nth-child(3) input');
+let bookingMode = 'book';
 
 if (tabs.length) {
   tabs.forEach((tab) => {
     tab.addEventListener('click', () => {
       tabs.forEach((item) => item.classList.remove('active'));
       tab.classList.add('active');
+      bookingMode = tab.dataset.mode || 'book';
+
+      const modeLabels = {
+        book: 'Find flights',
+        reservation: 'Find reservation',
+        'check-in': 'Continue to check-in',
+        package: 'Find packages'
+      };
+
+      submitButton.textContent = modeLabels[bookingMode];
+      if (formStatus) {
+        formStatus.textContent = `${tab.textContent.trim()} selected.`;
+      }
     });
+  });
+}
+
+if (swapButton && fromInput && toInput) {
+  swapButton.addEventListener('click', () => {
+    const fromValue = fromInput.value;
+    fromInput.value = toInput.value;
+    toInput.value = fromValue;
+    if (formStatus) {
+      formStatus.textContent = 'Departure and destination swapped.';
+    }
   });
 }
 
@@ -76,13 +107,45 @@ if (form && submitButton) {
     const originalText = submitButton.textContent;
     submitButton.textContent = 'Searching...';
     submitButton.disabled = true;
+    if (formStatus) {
+      formStatus.textContent = 'Preparing your request...';
+    }
 
     setTimeout(() => {
-      submitButton.textContent = 'Flights ready';
+      const successMessages = {
+        book: 'Flight search ready. Select your preferred flight next.',
+        reservation: 'Reservation search ready.',
+        'check-in': 'Check-in request ready.',
+        package: 'Package search ready.'
+      };
+      submitButton.textContent = 'Ready';
+      if (formStatus) {
+        formStatus.textContent = successMessages[bookingMode];
+      }
       setTimeout(() => {
         submitButton.textContent = originalText;
         submitButton.disabled = false;
       }, 1400);
     }, 800);
+  });
+}
+
+if (subscribeButton && newsletterInput) {
+  subscribeButton.addEventListener('click', () => {
+    if (!newsletterInput.checkValidity()) {
+      newsletterInput.focus();
+      newsletterInput.setCustomValidity('Enter a valid email address to subscribe.');
+      newsletterInput.reportValidity();
+      newsletterInput.setCustomValidity('');
+      return;
+    }
+
+    subscribeButton.textContent = 'Subscribed';
+    newsletterInput.value = '';
+    newsletterInput.placeholder = 'Thank you for subscribing';
+    window.setTimeout(() => {
+      subscribeButton.textContent = 'Subscribe';
+      newsletterInput.placeholder = 'Email address';
+    }, 1800);
   });
 }

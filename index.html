@@ -82,10 +82,10 @@
       <section class="booking-section" id="products">
         <div class="booking-shell">
           <div class="booking-tabs" role="tablist" aria-label="Flight search tabs">
-            <button class="tab active" type="button">BOOK FLIGHT</button>
-            <button class="tab" type="button">FIND RESERVATION</button>
-            <button class="tab" type="button">CHECK-IN</button>
-            <button class="tab" type="button">FIND PACKAGE</button>
+            <button class="tab active" type="button" data-mode="book">BOOK FLIGHT</button>
+            <button class="tab" type="button" data-mode="reservation">FIND RESERVATION</button>
+            <button class="tab" type="button" data-mode="check-in">CHECK-IN</button>
+            <button class="tab" type="button" data-mode="package">FIND PACKAGE</button>
           </div>
 
           <form class="booking-form" aria-label="Flight booking form">
@@ -129,6 +129,7 @@
               <div class="coupon">🎫 Have a coupon code? Enter it here</div>
               <button class="primary-btn wide" type="submit">Find flights</button>
             </div>
+            <p class="form-status" aria-live="polite"></p>
           </form>
         </div>
       </section>
@@ -151,7 +152,7 @@
           <p>Safarilink is Kenya's premier safari airline with a network of connecting domestic scheduled services to all the best destinations within Kenya, Uganda and across the border into northern Tanzania.</p>
           <div class="newsletter-title">SUBSCRIBE TO OUR NEWSLETTER</div>
           <div class="newsletter-box">
-            <input type="text" placeholder="" aria-label="Email address" />
+            <input type="email" placeholder="Email address" aria-label="Email address" required />
           </div>
           <button class="subscribe-btn" type="button">Subscribe</button>
         </div>
