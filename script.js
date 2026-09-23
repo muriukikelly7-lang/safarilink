@@ -147,14 +147,24 @@ const updateFareSummary = () => {
   const ageInputs = Array.from(childAges.querySelectorAll('select'));
   const rates = ageInputs.map((input) => getChildRate(Number(input.value))).filter(Boolean);
   const adults = Number(adultCount.value);
+  const selectedFare = findFare();
+  const baseFare = selectedFare ? Number(selectedFare.fare.replace(/[^0-9.]/g, '')) : 0;
+  const currency = selectedFare?.fare.startsWith('USD') ? 'USD' : 'KSh';
+  const tripMultiplier = Array.from(tripRadios).some((radio) => radio.checked && radio.nextSibling?.textContent.trim() === 'Roundtrip') ? 2 : 1;
 
   if (!rates.length) {
-    fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} selected. Add children to calculate child fares.`;
+    if (baseFare) {
+      const total = baseFare * adults * tripMultiplier;
+      fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} · Total fare: ${currency} ${total.toLocaleString()}${tripMultiplier === 2 ? ' roundtrip' : ''}.`;
+    } else {
+      fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} selected. Choose a published route to calculate the total fare.`;
+    }
     return;
   }
 
-  const childTotal = rates.reduce((total, rate) => total + rate, 0);
-  fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} + ${rates.length} child${rates.length === 1 ? '' : 'ren'} selected. Child fares: ${rates.join('%, ')}%. Total child fare: ${childTotal}% of one adult fare.`;
+  const childTotal = rates.reduce((total, rate) => total + (baseFare * rate / 100), 0);
+  const total = (baseFare * adults + childTotal) * tripMultiplier;
+  fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} + ${rates.length} child${rates.length === 1 ? '' : 'ren'} · Total fare: ${currency} ${total.toLocaleString(undefined, { maximumFractionDigits: 2 })}${tripMultiplier === 2 ? ' roundtrip' : ''}.`;
 };
 
 const renderChildAgeInputs = () => {
