@@ -311,6 +311,10 @@ if (confirmBookingButton) {
     }
 
     const fare = findFare();
+    const calculation = getFareCalculation();
+    const calculatedFare = calculation
+      ? `${calculation.currency} ${calculation.total.toLocaleString(undefined, { maximumFractionDigits: 2 })}${calculation.roundtrip ? ' roundtrip' : ''}`
+      : 'To be confirmed';
     const message = [
       'SafariLink booking request',
       `Route: ${fare?.route || `${fromInput.value} to ${toInput.value}`}`,
@@ -319,7 +323,8 @@ if (confirmBookingButton) {
       `Customer: ${customerName.value}`,
       `ID/Passport: ${customerId.value}`,
       `Email: ${customerEmail.value}`,
-      `Fare: ${fare?.fare || 'To be confirmed'}`
+      `Published fare: ${fare?.fare || 'To be confirmed'}`,
+      `Calculated total: ${calculatedFare}`
     ].join('\n');
 
     window.open(`https://wa.me/254736388612?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
