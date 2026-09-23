@@ -161,9 +161,13 @@
               <button id="accept-fare" class="accept-fare" type="button">Accept fare</button>
             </div>
 
-            <div id="customer-details" class="customer-details" hidden>
+            <div id="customer-details" class="customer-details" role="dialog" aria-modal="true" aria-labelledby="customer-details-title" hidden>
               <div class="customer-details-heading">
-                <h3>Customer details</h3>
+                <div>
+                  <span class="modal-kicker">Ready to book</span>
+                  <h3 id="customer-details-title">Passenger details</h3>
+                  <p>We will use these details to prepare your booking request.</p>
+                </div>
                 <button id="close-customer-details" class="close-customer-details" type="button" aria-label="Close customer details">&times;</button>
               </div>
               <div class="customer-fields">
@@ -171,7 +175,7 @@
                 <label>ID or passport number<input id="customer-id" type="text" autocomplete="off" disabled required /></label>
                 <label>Email address<input id="customer-email" type="email" autocomplete="email" disabled required /></label>
               </div>
-              <button id="confirm-booking" class="primary-btn confirm-booking" type="button">Confirm booking</button>
+              <button id="confirm-booking" class="primary-btn confirm-booking" type="button">Continue to WhatsApp</button>
               <p id="booking-status" class="form-status" aria-live="polite"></p>
             </div>
           </form>
@@ -256,6 +260,7 @@
             <input type="email" placeholder="Email address" aria-label="Email address" required />
           </div>
           <button class="subscribe-btn" type="button">Subscribe</button>
+          <p class="newsletter-status" aria-live="polite"></p>
         </div>
 
         <div class="footer-col links-col">

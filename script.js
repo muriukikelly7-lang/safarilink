@@ -49,6 +49,7 @@ const formStatus = document.querySelector('.form-status');
 const swapButton = document.querySelector('.swap-btn');
 const newsletterInput = document.querySelector('.newsletter-box input');
 const subscribeButton = document.querySelector('.subscribe-btn');
+const newsletterStatus = document.querySelector('.newsletter-status');
 const fromInput = document.querySelector('.from-field input');
 const toInput = document.querySelector('.route-grid .field:nth-child(3) input');
 const adultCount = document.querySelector('#adult-count');
@@ -292,6 +293,13 @@ if (closeCustomerDetails && customerDetails) {
   closeCustomerDetails.addEventListener('click', () => {
     customerDetails.hidden = true;
   });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && !customerDetails.hidden) {
+      customerDetails.hidden = true;
+      acceptFareButton?.focus();
+    }
+  });
 }
 
 if (confirmBookingButton) {
@@ -316,6 +324,19 @@ if (confirmBookingButton) {
 
     window.open(`https://wa.me/254736388612?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
     bookingStatus.textContent = 'Booking request prepared in WhatsApp.';
+  });
+}
+
+if (newsletterInput && subscribeButton) {
+  subscribeButton.addEventListener('click', () => {
+    if (!newsletterInput.checkValidity()) {
+      newsletterInput.reportValidity();
+      newsletterStatus.textContent = 'Enter a valid email address to subscribe.';
+      return;
+    }
+
+    newsletterStatus.textContent = `Thanks. ${newsletterInput.value.trim()} is ready for the SafariLink newsletter.`;
+    newsletterInput.value = '';
   });
 }
 
