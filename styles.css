@@ -847,7 +847,9 @@ a {
   color: #fff;
   font-size: 1rem;
   font-weight: 900;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+  text-shadow: none;
   text-transform: uppercase;
 }
 
@@ -855,6 +857,11 @@ a {
 .confirm-booking:focus-visible {
   background: #173f36;
   border-color: #b98b26;
+}
+
+.customer-details .form-status {
+  margin: 10px 0 0;
+  color: #4c4d47;
 }
 
 @media (max-width: 560px) {
