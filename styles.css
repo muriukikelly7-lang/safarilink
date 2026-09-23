@@ -691,6 +691,8 @@ a {
   z-index: 20;
   isolation: isolate;
   width: min(620px, calc(100% - 32px));
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
   margin: 0;
   transform: translate(-50%, -50%);
   padding: 0 28px 26px;
@@ -837,7 +839,7 @@ a {
   outline-offset: 1px;
 }
 
-.confirm-booking {
+.customer-details .confirm-booking {
   margin-top: 14px;
   width: 100%;
   min-height: 50px;
@@ -853,8 +855,8 @@ a {
   text-transform: uppercase;
 }
 
-.confirm-booking:hover,
-.confirm-booking:focus-visible {
+.customer-details .confirm-booking:hover,
+.customer-details .confirm-booking:focus-visible {
   background: #173f36;
   border-color: #b98b26;
 }
