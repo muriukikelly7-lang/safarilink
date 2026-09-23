@@ -840,17 +840,21 @@ a {
 .confirm-booking {
   margin-top: 14px;
   width: 100%;
-  min-height: 42px;
+  min-height: 50px;
+  border: 2px solid #d7ac4d;
   padding: 0 22px;
-  background: #173f36;
-  font-size: 0.95rem;
+  background: #0d2f29;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 .confirm-booking:hover,
 .confirm-booking:focus-visible {
-  background: #0d2f29;
+  background: #173f36;
+  border-color: #b98b26;
 }
 
 @media (max-width: 560px) {
