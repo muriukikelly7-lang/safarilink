@@ -839,7 +839,8 @@ a {
   outline-offset: 1px;
 }
 
-.customer-details .confirm-booking {
+.customer-details .confirm-booking,
+.seat-selection .confirm-booking {
   margin-top: 14px;
   width: 100%;
   min-height: 50px;
@@ -856,7 +857,9 @@ a {
 }
 
 .customer-details .confirm-booking:hover,
-.customer-details .confirm-booking:focus-visible {
+.customer-details .confirm-booking:focus-visible,
+.seat-selection .confirm-booking:hover,
+.seat-selection .confirm-booking:focus-visible {
   background: #173f36;
   border-color: #b98b26;
 }
@@ -864,6 +867,180 @@ a {
 .customer-details .form-status {
   margin: 10px 0 0;
   color: #4c4d47;
+}
+
+.seat-selection {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 21;
+  isolation: isolate;
+  width: min(620px, calc(100% - 32px));
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  margin: 0;
+  padding: 0 28px 24px;
+  transform: translate(-50%, -50%);
+  border: 1px solid #d8d5cb;
+  border-top: 7px solid #ae9008;
+  background: #fff;
+}
+
+.seat-selection-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 -28px;
+  padding: 22px 28px 16px;
+  background: #f5f4ef;
+  border-bottom: 1px solid #e6e2d8;
+}
+
+.seat-selection-heading h3 {
+  margin: 4px 0 5px;
+  color: #213d38;
+  font-size: 1.3rem;
+  text-transform: none;
+}
+
+.seat-selection-heading p {
+  margin: 0;
+  color: #6b6c65;
+  font-size: 0.9rem;
+}
+
+.seat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 16px 0 12px;
+  color: #4c4d47;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.seat-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.seat-swatch {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.seat-swatch.available,
+.seat.available {
+  background: #13b45b;
+}
+
+.seat-swatch.reserved,
+.seat.reserved {
+  background: #cfd3df;
+}
+
+.seat-swatch.selected,
+.seat.selected {
+  background: #b98b26;
+}
+
+.seat-map {
+  padding: 16px 14px 20px;
+  border-radius: 20px;
+  background: #eef7fc;
+}
+
+.cockpit {
+  width: min(240px, 75%);
+  margin: 0 auto 20px;
+  padding: 13px 18px;
+  border-radius: 24px;
+  background: #273144;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) 28px repeat(2, minmax(0, 1fr));
+  gap: 10px 12px;
+  align-items: center;
+}
+
+.seat-row-number {
+  grid-column: 3;
+  grid-row: auto;
+  color: #273144;
+  font-size: 1rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.seat {
+  min-width: 0;
+  min-height: 48px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 0.92rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.seat:hover:not(:disabled),
+.seat:focus-visible {
+  border-color: #173f36;
+  outline: none;
+}
+
+.seat.reserved {
+  color: #646b77;
+  cursor: not-allowed;
+}
+
+.seat.selected {
+  border-color: #6d5310;
+  color: #fff;
+}
+
+.seat-aisle {
+  display: none;
+}
+
+.seat-selection-footer {
+  display: grid;
+  gap: 8px;
+}
+
+.seat-selection-footer .form-status {
+  margin: 12px 0 0;
+  color: #4c4d47;
+}
+
+@media (max-width: 560px) {
+  .seat-selection {
+    width: min(100% - 20px, 620px);
+    padding: 0 18px 20px;
+  }
+
+  .seat-selection-heading {
+    margin: 0 -18px;
+    padding: 20px 18px 16px;
+  }
+
+  .seat-map {
+    padding: 12px 8px 16px;
+  }
+
+  .seat-grid {
+    gap: 8px 6px;
+  }
 }
 
 @media (max-width: 560px) {

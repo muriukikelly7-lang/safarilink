@@ -67,6 +67,12 @@ const customerEmail = document.querySelector('#customer-email');
 const confirmBookingButton = document.querySelector('#confirm-booking');
 const bookingStatus = document.querySelector('#booking-status');
 const closeCustomerDetails = document.querySelector('#close-customer-details');
+const seatSelection = document.querySelector('#seat-selection');
+const closeSeatSelection = document.querySelector('#close-seat-selection');
+const seatGrid = document.querySelector('#seat-grid');
+const seatStatus = document.querySelector('#seat-status');
+const seatRouteSummary = document.querySelector('#seat-route-summary');
+const confirmSeatsButton = document.querySelector('#confirm-seats');
 let bookingMode = 'book';
 
 const fareRoutes = document.querySelectorAll('.fare-table-wrap tbody tr');
@@ -310,6 +316,20 @@ if (confirmBookingButton) {
       return;
     }
 
+    if (seatSelection && seatGrid) {
+      customerDetails.hidden = true;
+      seatSelection.hidden = false;
+      const passengerTotal = Number(adultCount?.value || 1) + Number(childCount?.value || 0);
+      const fare = findFare();
+      seatRouteSummary.textContent = `${fare?.route || `${fromInput.value} to ${toInput.value}`} · Select ${passengerTotal} seat${passengerTotal === 1 ? '' : 's'}.`;
+      seatGrid.querySelectorAll('.seat.selected').forEach((seat) => seat.classList.remove('selected'));
+      seatGrid.querySelectorAll('.seat').forEach((seat) => seat.setAttribute('aria-pressed', 'false'));
+      seatSelection.dataset.passengerTotal = String(passengerTotal);
+      seatStatus.textContent = `Select ${passengerTotal} seat${passengerTotal === 1 ? '' : 's'} to continue.`;
+      closeSeatSelection?.focus();
+      return;
+    }
+
     const fare = findFare();
     const calculation = getFareCalculation();
     const calculatedFare = calculation
@@ -332,6 +352,93 @@ if (confirmBookingButton) {
 
     window.open(`https://wa.me/254736388612?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
     bookingStatus.textContent = 'Booking request prepared in WhatsApp.';
+  });
+}
+
+if (seatGrid) {
+  const reservedSeats = new Set(['4B', '5C', '6B', '7A', '8D']);
+  for (let row = 1; row <= 8; row += 1) {
+    const rowNumber = document.createElement('span');
+    rowNumber.className = 'seat-row-number';
+    rowNumber.textContent = String(row);
+    seatGrid.appendChild(rowNumber);
+
+    ['A', 'B', 'C', 'D'].forEach((letter, index) => {
+      if (index === 2) {
+        const aisle = document.createElement('span');
+        aisle.className = 'seat-aisle';
+        aisle.setAttribute('aria-hidden', 'true');
+        seatGrid.appendChild(aisle);
+      }
+
+      const seatName = `${row}${letter}`;
+      const seat = document.createElement('button');
+      seat.type = 'button';
+      seat.className = `seat${reservedSeats.has(seatName) ? ' reserved' : ''}`;
+      seat.textContent = seatName;
+      seat.setAttribute('aria-label', `${seatName}${reservedSeats.has(seatName) ? ', reserved' : ', available'}`);
+      seat.setAttribute('aria-pressed', 'false');
+      seat.disabled = reservedSeats.has(seatName);
+      seat.addEventListener('click', () => {
+        const passengerTotal = Number(seatSelection?.dataset.passengerTotal || 1);
+        const selectedSeats = seatGrid.querySelectorAll('.seat.selected');
+        if (!seat.classList.contains('selected') && selectedSeats.length >= passengerTotal) {
+          seatStatus.textContent = `You can select ${passengerTotal} seat${passengerTotal === 1 ? '' : 's'} for this booking.`;
+          return;
+        }
+        seat.classList.toggle('selected');
+        seat.setAttribute('aria-pressed', String(seat.classList.contains('selected')));
+        const selectedCount = seatGrid.querySelectorAll('.seat.selected').length;
+        seatStatus.textContent = selectedCount === passengerTotal
+          ? 'All passenger seats selected. Confirm to continue.'
+          : `Select ${passengerTotal - selectedCount} more seat${passengerTotal - selectedCount === 1 ? '' : 's'}.`;
+      });
+      seatGrid.appendChild(seat);
+    });
+  }
+}
+
+const closeSeats = () => {
+  if (!seatSelection) return;
+  seatSelection.hidden = true;
+  customerDetails.hidden = false;
+  confirmBookingButton?.focus();
+};
+
+closeSeatSelection?.addEventListener('click', closeSeats);
+
+if (confirmSeatsButton) {
+  confirmSeatsButton.addEventListener('click', () => {
+    const selectedSeats = Array.from(seatGrid?.querySelectorAll('.seat.selected') || []).map((seat) => seat.textContent);
+    const passengerTotal = Number(seatSelection?.dataset.passengerTotal || 1);
+    if (selectedSeats.length !== passengerTotal) {
+      seatStatus.textContent = `Please select ${passengerTotal} seat${passengerTotal === 1 ? '' : 's'} before confirming.`;
+      return;
+    }
+
+    const fare = findFare();
+    const calculation = getFareCalculation();
+    const calculatedFare = calculation
+      ? `${calculation.currency} ${calculation.total.toLocaleString(undefined, { maximumFractionDigits: 2 })}${calculation.roundtrip ? ' roundtrip' : ''}`
+      : 'To be confirmed';
+    const adults = calculation?.adults || Number(adultCount?.value || 1);
+    const children = Number(childCount?.value || 0);
+    const message = [
+      'SafariLink booking request',
+      `Route: ${fare?.route || `${fromInput.value} to ${toInput.value}`}`,
+      `Departure: ${document.querySelector('.detail-grid input[type="date"]')?.value || 'Not selected'}`,
+      `Return: ${returnDateInput?.value || 'One-way'}`,
+      `Passenger count: ${adults + children} total (${adults} adult${adults === 1 ? '' : 's'}${children ? `, ${children} child${children === 1 ? '' : 'ren'}` : ''})`,
+      `Seats: ${selectedSeats.join(', ')}`,
+      `Customer: ${customerName.value}`,
+      `ID/Passport: ${customerId.value}`,
+      `Email: ${customerEmail.value}`,
+      `Published fare: ${fare?.fare || 'To be confirmed'}`,
+      `Calculated total: ${calculatedFare}`
+    ].join('\n');
+
+    window.open(`https://wa.me/254736388612?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+    seatStatus.textContent = 'Booking request prepared in WhatsApp.';
   });
 }
 
