@@ -374,7 +374,7 @@ if (seatGrid) {
       const seatName = `${row}${letter}`;
       const seat = document.createElement('button');
       seat.type = 'button';
-      seat.className = `seat${reservedSeats.has(seatName) ? ' reserved' : ''}`;
+      seat.className = `seat${reservedSeats.has(seatName) ? ' reserved' : ' available'}`;
       seat.textContent = seatName;
       seat.setAttribute('aria-label', `${seatName}${reservedSeats.has(seatName) ? ', reserved' : ', available'}`);
       seat.setAttribute('aria-pressed', 'false');
