@@ -57,6 +57,37 @@ const childAges = document.querySelector('#child-ages');
 const fareSummary = document.querySelector('#fare-summary');
 let bookingMode = 'book';
 
+const fareRoutes = document.querySelectorAll('.fare-table-wrap tbody tr');
+const bookTab = document.querySelector('.tab[data-mode="book"]');
+
+const useFareRoute = (row) => {
+  const routeText = row.cells[0]?.textContent.trim();
+  const routeParts = routeText?.split('↔').map((part) => part.trim());
+  if (!routeParts || routeParts.length !== 2 || !fromInput || !toInput) return;
+
+  fromInput.value = routeParts[0];
+  toInput.value = routeParts[1];
+  if (bookTab) bookTab.click();
+  if (formStatus) {
+    formStatus.textContent = `${routeParts[0]} to ${routeParts[1]} selected from the fare list.`;
+  }
+  document.querySelector('#products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+
+fareRoutes.forEach((row) => {
+  row.classList.add('fare-route');
+  row.tabIndex = 0;
+  row.setAttribute('role', 'button');
+  row.setAttribute('aria-label', `Book ${row.cells[0]?.textContent.trim()}`);
+  row.addEventListener('click', () => useFareRoute(row));
+  row.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      useFareRoute(row);
+    }
+  });
+});
+
 const getChildRate = (age) => {
   if (age >= 3 && age <= 5) return 50;
   if (age >= 6 && age <= 9) return 65;

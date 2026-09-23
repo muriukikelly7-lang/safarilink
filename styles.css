@@ -809,6 +809,18 @@ a {
   white-space: nowrap;
 }
 
+.fare-route {
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.fare-route:hover,
+.fare-route:focus-visible {
+  background: #fff8df;
+  outline: 2px solid #ae9008;
+  outline-offset: -2px;
+}
+
 .coupon {
   display: flex;
   align-items: center;
