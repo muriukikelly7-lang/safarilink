@@ -689,6 +689,7 @@ a {
   left: 50%;
   top: 50%;
   z-index: 20;
+  isolation: isolate;
   width: min(620px, calc(100% - 32px));
   margin: 0;
   transform: translate(-50%, -50%);
@@ -707,6 +708,11 @@ a {
   width: 100vw;
   height: 100vh;
   background: rgba(14,25,22,0.55);
+}
+
+.customer-details > * {
+  position: relative;
+  z-index: 1;
 }
 
 .customer-details-heading {
