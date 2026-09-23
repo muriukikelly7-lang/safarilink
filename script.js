@@ -315,11 +315,14 @@ if (confirmBookingButton) {
     const calculatedFare = calculation
       ? `${calculation.currency} ${calculation.total.toLocaleString(undefined, { maximumFractionDigits: 2 })}${calculation.roundtrip ? ' roundtrip' : ''}`
       : 'To be confirmed';
+    const adults = calculation?.adults || Number(adultCount?.value || 1);
+    const children = calculation?.rates.length || 0;
     const message = [
       'SafariLink booking request',
       `Route: ${fare?.route || `${fromInput.value} to ${toInput.value}`}`,
       `Departure: ${document.querySelector('.detail-grid input[type="date"]')?.value || 'Not selected'}`,
       `Return: ${returnDateInput?.value || 'One-way'}`,
+      `Passengers: ${adults + children} total (${adults} adult${adults === 1 ? '' : 's'}${children ? `, ${children} child${children === 1 ? '' : 'ren'}` : ''})`,
       `Customer: ${customerName.value}`,
       `ID/Passport: ${customerId.value}`,
       `Email: ${customerEmail.value}`,
