@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafariLink | Domestic and Regional Flights</title>
+    <meta name="description" content="Book flights to Kenya, Tanzania, and Zanzibar with SafariLink." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="utility-bar">
+        <div class="utility-inner">
+          <div class="utility-links">
+            <a href="#">👤 Customer Login</a>
+            <a href="#">👥 Agent Login</a>
+            <a href="#">🧾 Agent CRS Login</a>
+          </div>
+          <div class="utility-links right">
+            <a href="#">Online Checkin</a>
+            <a href="#">Careers</a>
+            <a href="#">Give Feedback</a>
+            <a href="#">Expectant Mothers</a>
+            <a href="#" class="currency">$ USD</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-header">
+        <div class="nav-wrap">
+          <div class="brand" aria-label="SafariLink logo">
+            <img
+              class="brand-image"
+              src="https://storage.aerocrs.com/4/system/SafarilinkLogo.png"
+              alt="SafariLink logo"
+            />
+          </div>
+
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="#">Destinations</a>
+            <a href="#">About Us</a>
+            <a href="#">Holiday Packages</a>
+            <a href="#">Sustainability</a>
+            <a href="#">Travel Information</a>
+            <a href="#">Safarilink News</a>
+            <a href="#">Frequent Flyer</a>
+            <a href="#">Contact Us</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero-banner">
+        <div class="hero-panel" data-carousel>
+          <div class="carousel-track">
+            <figure class="carousel-slide active">
+              <img src="notice.jpg" alt="SafariLink flight notice warning travelers about scam agents" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="safari.jpg" alt="Elephant walking through an African safari landscape" />
+            </figure>
+            <figure class="carousel-slide">
+              <img src="aircraft.jpg" alt="Passenger aircraft flying above the clouds" />
+            </figure>
+          </div>
+          <div class="carousel-controls" aria-label="Hero image controls">
+            <button class="carousel-arrow previous" type="button" aria-label="Previous slide">&#8249;</button>
+            <div class="carousel-dots">
+              <button class="carousel-dot active" type="button" aria-label="Show slide 1"></button>
+              <button class="carousel-dot" type="button" aria-label="Show slide 2"></button>
+              <button class="carousel-dot" type="button" aria-label="Show slide 3"></button>
+            </div>
+            <button class="carousel-arrow next" type="button" aria-label="Next slide">&#8250;</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="booking-section" id="products">
+        <div class="booking-shell">
+          <div class="booking-tabs" role="tablist" aria-label="Flight search tabs">
+            <button class="tab active" type="button">BOOK FLIGHT</button>
+            <button class="tab" type="button">FIND RESERVATION</button>
+            <button class="tab" type="button">CHECK-IN</button>
+            <button class="tab" type="button">FIND PACKAGE</button>
+          </div>
+
+          <form class="booking-form" aria-label="Flight booking form">
+            <div class="trip-mode">
+              <label class="radio-pill"><input type="radio" name="trip" checked /> Roundtrip</label>
+              <label class="radio-pill"><input type="radio" name="trip" /> One-way</label>
+            </div>
+
+            <div class="route-grid">
+              <div class="field from-field">
+                <label>From</label>
+                <input type="text" value="Nairobi (NBO)" />
+              </div>
+
+              <button class="swap-btn" type="button" aria-label="Swap cities">⇄</button>
+
+              <div class="field">
+                <label>To</label>
+                <input type="text" value="Mombasa (MBA)" />
+              </div>
+            </div>
+
+            <div class="detail-grid">
+              <div class="field">
+                <label>Departure</label>
+                <input type="date" />
+              </div>
+
+              <div class="field">
+                <label>Return</label>
+                <input type="date" />
+              </div>
+
+              <div class="field">
+                <label>Passengers</label>
+                <input type="text" value="1 Passenger" />
+              </div>
+            </div>
+
+            <div class="coupon-row">
+              <div class="coupon">🎫 Have a coupon code? Enter it here</div>
+              <button class="primary-btn wide" type="submit">Find flights</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="stats-band">
+        <div class="stats-inner">
+          <div class="stat"><span class="number">18</span><span class="label">Destinations</span></div>
+          <div class="stat"><span class="number">3</span><span class="label">Countries</span><span class="sub">Kenya, Uganda, Tanzania &amp; Zanzibar Island</span></div>
+          <div class="stat"><span class="number">15</span><span class="label">Aircraft</span><span class="small">In Fleet</span></div>
+          <div class="stat"><span class="number">30+</span><span class="label">Daily</span><span class="small">Flights</span></div>
+          <div class="stat"><span class="number">250+</span><span class="label">Skilled</span><span class="small">Professionals</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="contact">
+      <div class="footer-grid">
+        <div class="footer-col brand-col">
+          <div class="footer-heading">SAFARILINK AVIATION LIMITED</div>
+          <p>Safarilink is Kenya's premier safari airline with a network of connecting domestic scheduled services to all the best destinations within Kenya, Uganda and across the border into northern Tanzania.</p>
+          <div class="newsletter-title">SUBSCRIBE TO OUR NEWSLETTER</div>
+          <div class="newsletter-box">
+            <input type="text" placeholder="" aria-label="Email address" />
+          </div>
+          <button class="subscribe-btn" type="button">Subscribe</button>
+        </div>
+
+        <div class="footer-col links-col">
+          <div class="footer-heading">FLY SAFARILINK TO</div>
+          <ul>
+            <li>Amboseli</li>
+            <li>Diani</li>
+            <li>Arusha</li>
+            <li>Kisumu</li>
+            <li>Lamu</li>
+            <li>Lewa Downs</li>
+            <li>Loisaba</li>
+            <li>Zanzibar</li>
+          </ul>
+        </div>
+
+        <div class="footer-col links-col">
+          <div class="footer-heading">CHEAP FLIGHTS TO</div>
+          <ul>
+            <li>Mombasa</li>
+            <li>Malindi</li>
+            <li>Masai Mara</li>
+            <li>Naivasha</li>
+            <li>Nanyuki</li>
+            <li>Samburu</li>
+            <li>Tsavo West</li>
+            <li>Zanzibar</li>
+          </ul>
+        </div>
+
+        <div class="footer-col social-col">
+          <div class="footer-heading">CONNECT WITH US</div>
+          <div class="socials">
+            <span>f</span>
+            <span>x</span>
+            <span>◎</span>
+          </div>
+          <div class="contact-us">
+            <h4>CONTACT US</h4>
+            <p>☐ Phoenix House, Wilson Airport</p>
+            <p>res@flysafarilink.com</p>
+            <p>+254730888000</p>
+            <p>+254206890000</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-strip"><span>© Copyright: Safarilink Aviation Ltd</span></div>
+        <div class="legal-line">
+          <a href="#">Contact Us</a> |
+          <a href="#">Give Feedback</a> |
+          <a href="#">Executive Safari Lounge</a> |
+          <a href="#">Safarilink Photo Gallery</a> |
+          <a href="#">Safarilink / Kenya Airways Codeshare Agreement</a> |
+          <a href="#">Press Release</a> |
+          <a href="#">Link Magazine</a> |
+          <a href="#">Holiday Packages</a> |
+          <a href="#">Time Table</a> |
+          <span class="tag">Powered by GO7</span>
+        </div>
+        <div class="legal-subline">
+          <span>© All rights reserved</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
