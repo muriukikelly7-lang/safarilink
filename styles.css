@@ -207,6 +207,20 @@ a {
   object-position: center;
 }
 
+.notice-mobile-number {
+  position: absolute;
+  left: 57.5%;
+  bottom: 4.5%;
+  z-index: 1;
+  padding: 2px 5px;
+  background: rgba(255,255,255,0.96);
+  color: #4a3a2a;
+  font-size: clamp(0.58rem, 1.1vw, 1rem);
+  font-weight: 800;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
 .carousel-controls {
   position: absolute;
   left: 50%;
