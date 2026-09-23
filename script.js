@@ -55,10 +55,55 @@ const adultCount = document.querySelector('#adult-count');
 const childCount = document.querySelector('#child-count');
 const childAges = document.querySelector('#child-ages');
 const fareSummary = document.querySelector('#fare-summary');
+const flightResult = document.querySelector('#flight-result');
+const resultRoute = document.querySelector('#result-route');
+const resultDetails = document.querySelector('#result-details');
+const acceptFareButton = document.querySelector('#accept-fare');
+const customerDetails = document.querySelector('#customer-details');
+const customerName = document.querySelector('#customer-name');
+const customerId = document.querySelector('#customer-id');
+const customerEmail = document.querySelector('#customer-email');
+const confirmBookingButton = document.querySelector('#confirm-booking');
+const bookingStatus = document.querySelector('#booking-status');
+const closeCustomerDetails = document.querySelector('#close-customer-details');
 let bookingMode = 'book';
 
 const fareRoutes = document.querySelectorAll('.fare-table-wrap tbody tr');
 const bookTab = document.querySelector('.tab[data-mode="book"]');
+
+const cleanLocation = (value) => value.replace(/\s*\([^)]*\)/g, '').trim().toLowerCase();
+
+const fareInventory = Array.from(fareRoutes).map((row) => ({
+  route: row.cells[0]?.textContent.trim() || '',
+  duration: row.cells[1]?.textContent.trim() || '',
+  fare: row.cells[2]?.textContent.trim() || ''
+}));
+
+const findFare = () => {
+  const from = cleanLocation(fromInput?.value || '');
+  const to = cleanLocation(toInput?.value || '');
+  return fareInventory.find((item) => {
+    const [origin, destination] = item.route.split('↔').map((part) => cleanLocation(part));
+    return (origin === from && destination === to) || (origin === to && destination === from);
+  });
+};
+
+const showFlightResult = () => {
+  const fare = findFare();
+  if (!flightResult || !resultRoute || !resultDetails) return;
+
+  if (!fare) {
+    flightResult.hidden = true;
+    if (formStatus) formStatus.textContent = 'No published fare found for this route. Choose a route from the fare list.';
+    return;
+  }
+
+  resultRoute.textContent = fare.route;
+  resultDetails.textContent = `${fare.duration} flight time · From ${fare.fare}`;
+  flightResult.hidden = false;
+  if (customerDetails) customerDetails.hidden = true;
+  if (formStatus) formStatus.textContent = 'Fare found. Review it, then accept to continue.';
+};
 
 const useFareRoute = (row) => {
   const routeText = row.cells[0]?.textContent.trim();
@@ -185,6 +230,11 @@ if (tripRadios.length && returnDateInput) {
 if (form && submitButton) {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
+    if (bookingMode !== 'book') {
+      if (formStatus) formStatus.textContent = `${submitButton.textContent} is ready.`;
+      return;
+    }
+
     const originalText = submitButton.textContent;
     submitButton.textContent = 'Searching...';
     submitButton.disabled = true;
@@ -193,21 +243,54 @@ if (form && submitButton) {
     }
 
     setTimeout(() => {
-      const successMessages = {
-        book: 'Flight search ready. Select your preferred flight next.',
-        reservation: 'Reservation search ready.',
-        'check-in': 'Check-in request ready.',
-        package: 'Package search ready.'
-      };
-      submitButton.textContent = 'Ready';
-      if (formStatus) {
-        formStatus.textContent = successMessages[bookingMode];
-      }
+      submitButton.textContent = originalText;
       setTimeout(() => {
-        submitButton.textContent = originalText;
         submitButton.disabled = false;
-      }, 1400);
+        showFlightResult();
+      }, 150);
     }, 800);
+  });
+}
+
+if (acceptFareButton && customerDetails) {
+  acceptFareButton.addEventListener('click', () => {
+    customerDetails.hidden = false;
+    [customerName, customerId, customerEmail].forEach((input) => {
+      input.disabled = false;
+    });
+    customerName.focus();
+    if (bookingStatus) bookingStatus.textContent = 'Enter your details to confirm this booking.';
+  });
+}
+
+if (closeCustomerDetails && customerDetails) {
+  closeCustomerDetails.addEventListener('click', () => {
+    customerDetails.hidden = true;
+  });
+}
+
+if (confirmBookingButton) {
+  confirmBookingButton.addEventListener('click', () => {
+    if (!customerName.checkValidity() || !customerId.checkValidity() || !customerEmail.checkValidity()) {
+      customerName.form?.reportValidity();
+      if (!customerName.value.trim()) customerName.focus();
+      return;
+    }
+
+    const fare = findFare();
+    const message = [
+      'SafariLink booking request',
+      `Route: ${fare?.route || `${fromInput.value} to ${toInput.value}`}`,
+      `Departure: ${document.querySelector('.detail-grid input[type="date"]')?.value || 'Not selected'}`,
+      `Return: ${returnDateInput?.value || 'One-way'}`,
+      `Customer: ${customerName.value}`,
+      `ID/Passport: ${customerId.value}`,
+      `Email: ${customerEmail.value}`,
+      `Fare: ${fare?.fare || 'To be confirmed'}`
+    ].join('\n');
+
+    window.open(`https://wa.me/254736388612?text=${encodeURIComponent(message)}`, '_blank', 'noopener');
+    bookingStatus.textContent = 'Booking request prepared in WhatsApp.';
   });
 }
 
