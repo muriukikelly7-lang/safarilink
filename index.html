@@ -121,8 +121,29 @@
 
               <div class="field">
                 <label>Passengers</label>
-                <input type="text" value="1 Passenger" />
+                <select id="adult-count" aria-label="Number of adults">
+                  <option value="1">1 Adult</option>
+                  <option value="2">2 Adults</option>
+                  <option value="3">3 Adults</option>
+                  <option value="4">4 Adults</option>
+                  <option value="5">5 Adults</option>
+                </select>
               </div>
+            </div>
+
+            <div class="passenger-pricing">
+              <div class="passenger-count-field">
+                <label for="child-count">Children</label>
+                <select id="child-count" aria-label="Number of children">
+                  <option value="0">No children</option>
+                  <option value="1">1 child</option>
+                  <option value="2">2 children</option>
+                  <option value="3">3 children</option>
+                  <option value="4">4 children</option>
+                </select>
+              </div>
+              <div id="child-ages" class="child-ages" aria-live="polite"></div>
+              <div id="fare-summary" class="fare-summary" aria-live="polite">Select passenger ages to calculate the fare.</div>
             </div>
 
             <div class="coupon-row">
@@ -189,13 +210,6 @@
           </div>
 
           <div class="fare-bottom-grid">
-            <div class="child-fares">
-              <h2>👨‍👩‍👧 Child Fares</h2>
-              <p>👧 3-5 years: 50% of adult fare</p>
-              <p>🧒 6-9 years: 65%</p>
-              <p>👦 10-14 years: 75%</p>
-              <p>🧑 15-17 years: 80%</p>
-            </div>
             <div class="whatsapp-booking">
               <h2>📲 Book via WhatsApp</h2>
               <a href="https://wa.me/254755533623">+254 755 533 623</a>

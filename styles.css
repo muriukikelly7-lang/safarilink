@@ -663,6 +663,54 @@ a {
   font-weight: 600;
 }
 
+.passenger-pricing {
+  display: grid;
+  grid-template-columns: 150px 1fr 1.4fr;
+  align-items: end;
+  gap: 12px;
+}
+
+.passenger-count-field,
+.child-ages {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.passenger-count-field label {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.passenger-count-field select,
+.child-age-select {
+  height: 42px;
+  border: 0;
+  border-radius: 0;
+  background: #f7f7f5;
+  color: #30332f;
+  padding: 0 12px;
+}
+
+.child-ages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.fare-summary {
+  min-height: 42px;
+  padding: 9px 12px;
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
 .fare-section {
   background: #f5f3ed;
   padding: 54px 0 60px;
@@ -757,14 +805,12 @@ a {
   margin-top: 24px;
 }
 
-.child-fares,
 .whatsapp-booking {
   background: #fff;
   border-top: 5px solid #ae9008;
   box-shadow: 0 8px 22px rgba(24, 31, 27, 0.08);
 }
 
-.child-fares p,
 .whatsapp-booking a {
   display: block;
   margin: 0;
@@ -1206,6 +1252,14 @@ a {
   .fare-bottom-grid {
     grid-template-columns: 1fr;
   }
+
+  .passenger-pricing {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fare-summary {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1278,6 +1332,18 @@ a {
   .route-grid,
   .detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .passenger-pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .child-ages {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fare-summary {
+    grid-column: auto;
   }
 
   .route-grid .swap-btn {

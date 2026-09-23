@@ -51,7 +51,57 @@ const newsletterInput = document.querySelector('.newsletter-box input');
 const subscribeButton = document.querySelector('.subscribe-btn');
 const fromInput = document.querySelector('.from-field input');
 const toInput = document.querySelector('.route-grid .field:nth-child(3) input');
+const adultCount = document.querySelector('#adult-count');
+const childCount = document.querySelector('#child-count');
+const childAges = document.querySelector('#child-ages');
+const fareSummary = document.querySelector('#fare-summary');
 let bookingMode = 'book';
+
+const getChildRate = (age) => {
+  if (age >= 3 && age <= 5) return 50;
+  if (age >= 6 && age <= 9) return 65;
+  if (age >= 10 && age <= 14) return 75;
+  if (age >= 15 && age <= 17) return 80;
+  return 0;
+};
+
+const updateFareSummary = () => {
+  if (!adultCount || !childCount || !childAges || !fareSummary) return;
+
+  const ageInputs = Array.from(childAges.querySelectorAll('select'));
+  const rates = ageInputs.map((input) => getChildRate(Number(input.value))).filter(Boolean);
+  const adults = Number(adultCount.value);
+
+  if (!rates.length) {
+    fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} selected. Add children to calculate child fares.`;
+    return;
+  }
+
+  const childTotal = rates.reduce((total, rate) => total + rate, 0);
+  fareSummary.textContent = `${adults} adult${adults === 1 ? '' : 's'} + ${rates.length} child${rates.length === 1 ? '' : 'ren'} selected. Child fares: ${rates.join('%, ')}%. Total child fare: ${childTotal}% of one adult fare.`;
+};
+
+const renderChildAgeInputs = () => {
+  if (!childCount || !childAges) return;
+
+  const count = Number(childCount.value);
+  childAges.innerHTML = '';
+  for (let index = 0; index < count; index += 1) {
+    const select = document.createElement('select');
+    select.className = 'child-age-select';
+    select.setAttribute('aria-label', `Age of child ${index + 1}`);
+    select.innerHTML = '<option value="3">Child age</option><option value="4">4 years</option><option value="5">5 years</option><option value="6">6 years</option><option value="7">7 years</option><option value="8">8 years</option><option value="9">9 years</option><option value="10">10 years</option><option value="11">11 years</option><option value="12">12 years</option><option value="13">13 years</option><option value="14">14 years</option><option value="15">15 years</option><option value="16">16 years</option><option value="17">17 years</option>';
+    select.addEventListener('change', updateFareSummary);
+    childAges.appendChild(select);
+  }
+  updateFareSummary();
+};
+
+if (adultCount && childCount) {
+  adultCount.addEventListener('change', updateFareSummary);
+  childCount.addEventListener('change', renderChildAgeInputs);
+  renderChildAgeInputs();
+}
 
 if (tabs.length) {
   tabs.forEach((tab) => {
