@@ -1604,6 +1604,10 @@ a {
     bottom: 10px;
   }
 
+  .hero-panel {
+    height: min(66.67vw, 500px);
+  }
+
   .booking-form {
     padding: 12px;
   }
@@ -1717,10 +1721,6 @@ a {
     gap: 8px 12px;
     text-align: center;
     font-size: 0.74rem;
-  }
-
-  .hero-panel {
-    height: 240px;
   }
 
   .carousel-arrow {
