@@ -172,7 +172,8 @@ a {
 
 .hero-panel {
   position: relative;
-  height: clamp(240px, 31vw, 500px);
+  aspect-ratio: 3 / 2;
+  height: auto;
   overflow: hidden;
   background: #eee;
   border-radius: 0;
@@ -1602,10 +1603,6 @@ a {
 
   .carousel-controls {
     bottom: 10px;
-  }
-
-  .hero-panel {
-    height: min(66.67vw, 500px);
   }
 
   .booking-form {
