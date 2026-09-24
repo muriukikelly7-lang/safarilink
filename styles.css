@@ -207,6 +207,15 @@ a {
   object-position: center;
 }
 
+.notice-slide {
+  background: #fff;
+}
+
+.notice-slide img {
+  object-fit: contain;
+  object-position: center;
+}
+
 .notice-mobile-number {
   position: absolute;
   left: 57.5%;
